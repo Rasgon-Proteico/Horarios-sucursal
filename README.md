@@ -7,4 +7,4 @@ El formato de colores es simple y porque se ve bonito nadamás :)
 
 <img width="1737" height="459" alt="2026-01-10_19-39-30" src="https://github.com/user-attachments/assets/a99f2760-f217-4f3f-ad9a-7027421e68be" />
 
-Un aproximado de como se ve en terminal
+Un aproximado de como se ve en terminal, se necesita un mínimo recomendado de 5 personas
