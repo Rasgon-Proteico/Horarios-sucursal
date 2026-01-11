@@ -15,6 +15,7 @@ RED = rgb(231,20,20)
 CYAN = rgb(12,215,217)                   
 WHITE = rgb(255,255,255)                 
 
+#<--- Funciones ---->
 def limpiar():
     os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -31,6 +32,7 @@ def colorear_celda(texto):
         return f"{texto:^11}"
 
 limpiar()
+#<---- Inicio ---->
 
 def capturar_nombres():
     lista = []
@@ -50,22 +52,23 @@ mis_trabajadores = capturar_nombres()
 # Creamos un diccionario donde todos empiezan con 48 horas por defecto
 horas_por_trabajador = {nombre: 48 for nombre in mis_trabajadores}
 
-print("\n¿Todos trabajarán las mismas horas (48h)?")
+print("\n¿Alguien va a trabajar turno extra?")
 print(" 1. Si              2. No")
 siono = input() 
 
-if siono == "2":
-    print("\nIntroduce el nombre de quién tiene horas diferentes y luego sus horas.")
+quienes_extra = []
+
+if siono == "1":
+    print("\nColoca el o los nombres de quien va a trabajar más.")
     print("Presiona ENTER en blanco cuando termines.")
     while True:
-        quien = input("¿Quién tiene horas diferentes?: ")
+        quien = input("¿Quién tiene turno extra?: ")
         if quien == "":
             break
         
         # Verifica si el nombre existe en nuestra lista original
-        if quien in horas_por_trabajador:
-            cuantas = int(input(f"¿Cuántas horas totales trabajará {quien}?: "))
-            horas_por_trabajador[quien] = cuantas
+        if quien in mis_trabajadores:
+            quienes_extra.append(quien)
         else:
             print("Ese nombre no está en la lista de trabajadores. Intenta de nuevo.")
 
@@ -74,7 +77,8 @@ horario = {}
 for i, trabajador in enumerate(mis_trabajadores):
     semana = ["-----------"] * 7
     dia_descanso = i % 7
-    semana[dia_descanso] = f" DESCANSO  " 
+    if trabajador not in quienes_extra:
+        semana[dia_descanso] = f" DESCANSO  "
     horario[trabajador] = semana
 
 # Por si falta banda en los turnos
@@ -108,10 +112,10 @@ for trabajador in mis_trabajadores:
 
     d_color = [colorear_celda(dia) for dia in d]
     
-    # Calcular horas reales trabajadas (8h por cada turno que no sea DESC)
+    # Calcular horas reales trabajadas (8h por cada turno que no sea DESCANSO)
     horas_reales = sum(8 for turno in d if turno in ["7:00-15:00 ", "14:00-22:00", "11:00-19:00"])
     
-    print(f"{trabajador:<15} | {d_color[0]} | {d_color[1]} | {d_color[2]} | {d_color[3]} | {d_color[4]} | {d_color[5]} | {d_color[6]} | {WHITE}{horas_reales:>8}h{RESET}")
+    print(f"{trabajador:<15} | {d_color[0]} | {d_color[1]} | {d_color[2]} | {d_color[3]} | {d_color[4]} | {d_color[5]} | {d_color[6]} | {CYAN}{horas_reales:>8}h{RESET}")
 
 
 
